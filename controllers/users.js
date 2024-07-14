@@ -1,5 +1,7 @@
 const User = require('../models/user')
 const Book = require('../models/book')
+const nodemailer = require('nodemailer');
+
 
 module.exports.renderRegister = (req, res) => {
     res.render('users/register')
@@ -47,6 +49,35 @@ module.exports.addToChecklist = async (req, res, next) => {
         const user = res.locals.currentUser;
         const book = await Book.findById(req.params.bookId);
         let bookQuantity = book.quantity;
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false, // Use true for port 465, false for all other ports
+            auth: {
+              user: "gamingsamarth@gmail.com",
+              pass: "ltpu aktw lqjb kfqo",
+            },
+          });  
+const mailOptions= {
+    // send mail with defined transport object
+      from:{
+        name: "Samarth",
+        address: "gamingsamarth@gmail.com"
+      }, // sender address
+      to: [user.email], // list of receivers
+      subject: "Book borrowed", // Subject line
+      text: `${book.title} is borrowed`, // plain text body
+      html: `<b>${book.title} is borrowed</b>`, // html body
+    };
+    sendMail = async (transport,mailOptions) => {
+        try {
+            await transporter.sendMail(mailOptions);
+            console.log("mail is sent")
+        } catch (error) {
+            console.error(error);
+        }
+    }   
 
         if (!user) {
             req.flash('error', 'User not found');
@@ -70,7 +101,7 @@ module.exports.addToChecklist = async (req, res, next) => {
         user.checkList.push(checklistItem);
         await book.save();
         await user.save();
-
+        sendMail(transporter,mailOptions);
         req.flash('success', 'Added to checklist successfully!');
         res.redirect(`/books`);
     } catch (e) {
