@@ -22,7 +22,7 @@ module.exports.storeReturnTo = (req, res, next) => {
 module.exports.isAuthor = async (req, res, next) => {
     const { id } = req.params;
     const book = await Book.findById(id);
-    if (!book.author.equals(req.user._id)) {
+    if (!req.user._id === '667fa931b0438f0e72d2ca80') {
         req.flash('error', 'You do not have the permission to do that!')
         return res.redirect(`/books/${id}`)
     }
