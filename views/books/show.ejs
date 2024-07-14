@@ -63,7 +63,7 @@
 
                     </li>
                 </ul>
-                <% if(currentUser === '667fa931b0438f0e72d2ca80'){ %>
+                <% if(currentUser.id === '667fa931b0438f0e72d2ca80'){ %>
                     <div class="card-body">
                         <a class="card-link btn btn-primary" href="/books/<%= book._id %>/edit">Edit</a>
                         <form class="d-inline" action="/books/<%= book._id %>?_method=DELETE" method="POST">
