@@ -1,0 +1,67 @@
+<% layout('/layouts/boilerplate') %>
+<div id="cluster-map"></div>
+<p>
+    <form action="/furnitures" method="GET" class="form-inline mt-3">
+        <div class="form-group">
+            <input type="text" name="search" class="form-control mb-3" placeholder="Search Furnitures..." value="<%= search %>">
+            <div class="text-center">
+                <button class="btn btn-success">Search</button>
+            </div>
+        </div>
+    </form>
+</p>
+<h1 class="text-center mt-5 mb-3">All Furnitures</h1>
+
+<% paginatedFurnitures.forEach(furniture => { %>
+    <div class="card mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <% if (furniture.images.length) { %>
+                    <img src="<%= furniture.images[0].url %>" alt="" class="img-fluid" width="100%" height="auto">
+                <% } else { %>
+                    <img src="https://res.cloudinary.com/dqeaomlck/image/upload/v1719638738/Furniture/photo-1567016432779-094069958ea5_hzfaa0.avif" alt="" class="img-fluid" width="100%" height="auto">
+                <% } %>
+            </div>
+            <div class="col-md-8 p-4">
+                <span class="d-flex justify-content-between mb-2">
+                    <h5 class="card-title mt-2"><%= furniture.title %></h5>
+                    <a href="/furnitures?search=<%= furniture.productType %>" class="text-light bg-dark btn"><%= furniture.productType %></a>
+                </span>
+                <p class="card-text"><%= furniture.description %></p>
+                <p class="card-text"><small class="text-muted"><%= furniture.location %></small></p>
+                <a href="/furnitures/<%= furniture._id %>" class="btn btn-primary">View <%= furniture.title %></a>
+            </div>
+        </div>
+    </div>
+<% }); %>
+
+<!-- Pagination Controls -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <% if (pagination.previous) { %>
+            <li class="page-item">
+                <a class="page-link" href="/furnitures?page=<%= pagination.previous %>&search=<%= search %>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        <% } %>
+        <% for (let i = 1; i <= totalPages; i++) { %>
+            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                <a class="page-link" href="/furnitures?page=<%= i %>&search=<%= search %>"><%= i %></a>
+            </li>
+        <% } %>
+        <% if (pagination.next) { %>
+            <li class="page-item">
+                <a class="page-link" href="/furnitures?page=<%= pagination.next %>&search=<%= search %>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        <% } %>
+    </ul>
+</nav>
+
+<script>
+    const mapToken = 'pk.eyJ1IjoibmVtaWxzaGFoIiwiYSI6ImNsd2Vva212MDE4djMyaWxkamx1emE2MG4ifQ.8i9uhpSxwWZo--UPI90rSA';
+    const furnitures = {features: <%-JSON.stringify(furnitures)%>};
+</script>
+<script src="/javascripts/clusterMap.js"></script>
