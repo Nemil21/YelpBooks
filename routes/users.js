@@ -4,7 +4,6 @@ const catchAsync = require('../utils/catchAsync');
 const passport = require('passport');
 const { storeReturnTo } = require('../middleware');
 const users = require('../controllers/users');
-const user = require('../models/user');
 
 router.route('/register')
     .get(users.renderRegister)
@@ -22,4 +21,5 @@ router.route('/books/:bookId/checklist')
 
 router.route('/checklist')
     .get(users.renderChecklist)
+    
 module.exports = router

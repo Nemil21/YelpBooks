@@ -1,9 +1,10 @@
-const User = require('../models/user')
-const Book = require('../models/book')
+const User = require('../models/user');
+const Book = require('../models/book');
+const stripe = require('stripe')('sk_test_51PWyMyRw3hGwcyrC0h8xiEZX9Sp6Yz54ANZJUUUr1hnw0OCnne8nheovUDzwi6EwDBNfuOBCmOtD43vCg9VmIado00IeHhPEcA');
 
 module.exports.renderRegister = (req, res) => {
-    res.render('users/register')
-}
+    res.render('users/register');
+};
 
 module.exports.register = async (req, res, next) => {
     try {
@@ -15,22 +16,22 @@ module.exports.register = async (req, res, next) => {
             if (err) return next(err);
             req.flash('success', 'Welcome to YelpBooks!');
             res.redirect('/books');
-        })
+        });
     } catch (e) {
-        req.flash('error', e.message)
+        req.flash('error', e.message);
         res.redirect('register');
     }
-}
+};
 
 module.exports.renderLogin = (req, res) => {
-    res.render('users/login')
-}
+    res.render('users/login');
+};
 
 module.exports.login = (req, res) => {
-    req.flash('success', 'Welcome Back!')
+    req.flash('success', 'Welcome Back!');
     const redirectUrl = res.locals.returnTo || '/books';
     res.redirect(redirectUrl);
-}
+};
 
 module.exports.logout = (req, res, next) => {
     req.logout(function (err) {
@@ -40,7 +41,7 @@ module.exports.logout = (req, res, next) => {
         req.flash('success', 'Goodbye!');
         res.redirect('/');
     });
-}
+};
 
 module.exports.addToChecklist = async (req, res, next) => {
     try {
@@ -50,20 +51,37 @@ module.exports.addToChecklist = async (req, res, next) => {
 
         if (!user) {
             req.flash('error', 'User not found');
-            return res.redirect('/books'); // Adjust the redirect path as needed
+            return res.redirect('/books');
         }
 
         if (!book) {
             req.flash('error', 'Book not found');
-            return res.redirect('/books'); // Adjust the redirect path as needed
+            return res.redirect('/books');
         }
 
-        const { date, quantity } = req.body;
+        const { date, quantity, stripeToken } = req.body;
+
+        const pricePerDay = book.price;
+        const totalPrice = pricePerDay * parseInt(quantity);
+
+        try {
+            await stripe.charges.create({
+                amount: totalPrice * 100,
+                currency: 'usd',
+                description: 'Book rental charge',
+                source: stripeToken,
+            });
+            req.flash('success', 'Payment Successful');
+        } catch (error) {
+            console.log(error);
+            req.flash('error', 'Payment failed');
+            return res.redirect('/books');
+        }
 
         const checklistItem = {
             bookchecked: book._id,
             startDate: new Date(date),
-            numberOfDays: parseInt(quantity)
+            numberOfDays: parseInt(quantity),
         };
 
         await book.updateOne({ quantity: bookQuantity - 1 });
@@ -90,7 +108,7 @@ module.exports.renderChecklist = async (req, res, next) => {
         const user = await User.findById(userId)
             .populate({
                 path: 'checkList.bookchecked',
-                model: 'Book'
+                model: 'Book',
             });
 
         if (!user) {
