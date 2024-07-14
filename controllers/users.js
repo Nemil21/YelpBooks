@@ -46,6 +46,7 @@ module.exports.addToChecklist = async (req, res, next) => {
     try {
         const user = res.locals.currentUser;
         const book = await Book.findById(req.params.bookId);
+        let bookQuantity = book.quantity;
 
         if (!user) {
             req.flash('error', 'User not found');
@@ -65,7 +66,9 @@ module.exports.addToChecklist = async (req, res, next) => {
             numberOfDays: parseInt(quantity)
         };
 
+        await book.updateOne({ quantity: bookQuantity - 1 });
         user.checkList.push(checklistItem);
+        await book.save();
         await user.save();
 
         req.flash('success', 'Added to checklist successfully!');
@@ -95,7 +98,7 @@ module.exports.renderChecklist = async (req, res, next) => {
             return res.redirect('/books');
         }
 
-        res.render('checklist', { user });
+        res.render('users/checklist', { user });
     } catch (err) {
         next(err);
     }

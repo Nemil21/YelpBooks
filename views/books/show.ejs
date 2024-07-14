@@ -44,28 +44,35 @@
                     </li>
                     <li class="list-group-item">
                         <div class="input-group w-100">
-                            <form class="d-flex flex-column w-100" action="/books/<%= book._id %>/checklist"
-                                method="POST">
-                                <div class="d-flex mb-2">
-                                    <label for="date" class="form-label w-50 col align-self-end">Select Rent Start
-                                        Date</label>
-                                    <input type="date" class="form-control w-50" placeholder="0" aria-label="date"
-                                        name="date" aria-describedby="date" required>
-                                </div>
+                            <% if(book.quantity > 0){ %>
+                                <form class="d-flex flex-column w-100" action="/books/<%= book._id %>/checklist"
+                                    method="POST">
+                                    <div class="d-flex mb-2">
+                                        <label for="date" class="form-label w-50 col align-self-end">Select Rent Start
+                                            Date</label>
+                                        <input type="date" class="form-control w-50" placeholder="0" aria-label="date"
+                                            name="date" aria-describedby="date" required>
+                                    </div>
 
-                                <div class="d-flex mb-2">
-                                    <label for="quantity" class="form-label w-50 col align-self-end">Number of
-                                        Days</label>
-                                    <input type="number" class="form-control w-50" placeholder="0" aria-label="quantity"
-                                        name="quantity" aria-describedby="quantity" required>
-                                </div>
-                                <div class="d-flex justify-content-center mt-2">
-                                    <button class="btn btn-outline-success" type="submit">Book</button>
-                                </div>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                            </form>
+                                    <div class="d-flex mb-2">
+                                        <label for="quantity" class="form-label w-50 col align-self-end">Number of
+                                            Days</label>
+                                        <input type="number" class="form-control w-50" placeholder="0" aria-label="quantity"
+                                            name="quantity" aria-describedby="quantity" required>
+                                    </div>
+                                    <div class="d-flex justify-content-center mt-2">
+                                        <button class="btn btn-outline-success" type="submit">Book</button>
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </form>
+                                <% } else { %>
+                                    <div class="d-flex justify-content-center">
+                                        <button class="btn btn-outline-danger" disabled>Out of Stock</button>
+                                    </div>
+                                    <% }
+                                %>
                         </div>
 
                     </li>
