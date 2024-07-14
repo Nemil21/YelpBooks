@@ -28,12 +28,19 @@
                     <h5 class="card-title">
                         <%= book.title %>
                     </h5>
+                    <span class="d-flex justify-content-between mb-2">
+                        <small class="text-muted"><%= book.author %> | Published: <%= new Date(book.publishDate).getFullYear() %> | <span><%= (book.categories.length ? book.categories[0] : 'No genre availale' )%></span></small>
+                    </span>
                     <p class="card-text">
                         <%= book.description %>
                     </p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">₹<%= book.price %>
+                    <li class="list-group-item"><strong>ISBN: </strong><%= book.isbn %>
+                    </li>
+                    <li class="list-group-item"> <strong>Price:</strong> ₹<%= book.price %>
+                    </li>
+                    <li class="list-group-item"> <strong>Available quantity:</strong> <%= book.quantity %>
                     </li>
                     <li class="list-group-item">
                         <div class="input-group w-100">
