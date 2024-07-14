@@ -8,7 +8,7 @@ function escapeRegex(text) {
 module.exports.index = async (req, res) => {
     const { search } = req.query;
     const page = parseInt(req.query.page) || 1;
-    const limit = 25;
+    const limit = 10;
     const startIndex = (page - 1) * limit;
     const regex = search ? new RegExp(escapeRegex(search), "gi") : null;
 
