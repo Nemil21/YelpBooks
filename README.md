@@ -13,7 +13,6 @@ This is a library management system that allows users to borrow books for a cert
 - Make a reservation
 - confirmation maik send
 - View reservation history
-- Map view of furniture locations
 - Add furniture to rental list
 - write a review for furniture
 - filter bookss according to your neeeds with pagination enbaled
