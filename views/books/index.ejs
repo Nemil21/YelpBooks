@@ -1,13 +1,14 @@
 <% layout('/layouts/boilerplate') %>
 <p>
     <form action="/books" method="GET" class="form-inline mt-3">
-        <div class="form-group">
-            <input type="text" name="search" class="form-control mb-3" placeholder="Search Books..." value="<%= search %>">
-            <div class="text-center">
-                <button class="btn btn-success">Search</button>
+        <div class="input-group"> <!-- Use input-group for better alignment -->
+            <input type="text" name="search" class="form-control" placeholder="Search Books..." value="<%= search %>">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-success">Search</button>
             </div>
         </div>
     </form>
+    
 </p>
 <div class="row mt-5 mb-3">
     <div class="col text-center">
