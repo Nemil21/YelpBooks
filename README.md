@@ -8,7 +8,7 @@ This is a library management system that allows users to borrow books for a cert
 
 - login and register
 - authorization
-- Browse through available furniture
+- Browse through available books
 - Select items to borrow
 - Make a reservation
 - confirmation maik send
