@@ -5,13 +5,13 @@
         <div class="col-6">
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <% furniture.images.forEach((img, i)=>{ %>
+                    <% book.images.forEach((img, i)=>{ %>
                         <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
                             <img src="<%= img.url %>" class="d-block w-100" alt="">
                         </div>
                         <% }) %>
                 </div>
-                <% if (furniture.images.length> 1){%>
+                <% if (book.images.length> 1){%>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
                         data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -27,33 +27,30 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <%= furniture.title %>
+                        <%= book.title %>
                     </h5>
                     <p class="card-text">
-                        <%= furniture.description %>
+                        <%= book.description %>
                     </p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-muted">
-                        <%= furniture.location %>
-                    </li>
-                    <li class="list-group-item">
-                        Submitted by <%= furniture.author.username %>
-                    </li>
-                    <li class="list-group-item">₹<%= furniture.price %>/day</li>
+                    <li class="list-group-item">₹<%= book.price %>/day</li>
                     <li class="list-group-item">
                         <div class="input-group w-100">
-                            <form class="d-flex flex-column w-100" action="/furnitures/<%= furniture._id %>/checklist" method="POST">
+                            <form class="d-flex flex-column w-100" action="/books/<%= book._id %>/checklist"
+                                method="POST">
                                 <div class="d-flex mb-2">
-                                    <label for="date" class="form-label w-50 col align-self-end">Select Rent Start Date</label>
+                                    <label for="date" class="form-label w-50 col align-self-end">Select Rent Start
+                                        Date</label>
                                     <input type="date" class="form-control w-50" placeholder="0" aria-label="date"
-                                    name="date" aria-describedby="date" required>
+                                        name="date" aria-describedby="date" required>
                                 </div>
-                                
+
                                 <div class="d-flex mb-2">
-                                    <label for="quantity" class="form-label w-50 col align-self-end">Number of Days</label>
+                                    <label for="quantity" class="form-label w-50 col align-self-end">Number of
+                                        Days</label>
                                     <input type="number" class="form-control w-50" placeholder="0" aria-label="quantity"
-                                    name="quantity" aria-describedby="quantity" required>
+                                        name="quantity" aria-describedby="quantity" required>
                                 </div>
                                 <div class="d-flex justify-content-center mt-2">
                                     <button class="btn btn-outline-success" type="submit">Book</button>
@@ -63,14 +60,14 @@
                                 </div>
                             </form>
                         </div>
-                        
+
                     </li>
                 </ul>
-                <% if(currentUser && furniture.author.equals(currentUser._id)){ %>
+                <% if(currentUser && book.author.equals(currentUser._id)){ %>
                     <div class="card-body">
-                        <a class="card-link btn btn-primary" href="/furnitures/<%= furniture._id %>/edit">Edit</a>
-                        <form class="d-inline" action="/furnitures/<%= furniture._id %>?_method=DELETE" method="POST">
-                            <button class="btn btn-danger">Delete Furniture</button>
+                        <a class="card-link btn btn-primary" href="/books/<%= book._id %>/edit">Edit</a>
+                        <form class="d-inline" action="/books/<%= book._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger">Delete Book</button>
                         </form>
                     </div>
                     <% } %>
@@ -83,8 +80,7 @@
         <div class="col-6">
             <% if(currentUser){ %>
                 <h2>Leave a Review</h2>
-                <form action="/furnitures/<%= furniture._id %>/reviews" method="POST" class="mb-3 validated-form"
-                    novalidate>
+                <form action="/books/<%= book._id %>/reviews" method="POST" class="mb-3 validated-form" novalidate>
                     <div class="mb-3">
                         <fieldset class="starability-basic">
                             <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1"
@@ -112,7 +108,7 @@
                     <button class="btn btn-success">Submit</button>
                 </form>
                 <% } %>
-                    <% for (let review of furniture.reviews){ %>
+                    <% for (let review of book.reviews){ %>
                         <div class="card mb-3">
                             <div class="card-body">
                                 <h5 class="card-title">
@@ -125,8 +121,7 @@
                                     <%= review.body %>
                                 </p>
                                 <% if(currentUser && review.author.equals(currentUser._id)){ %>
-                                    <form
-                                        action="/furnitures/<%= furniture._id %>/reviews/<%=review._id %>?_method=DELETE"
+                                    <form action="/books/<%= book._id %>/reviews/<%=review._id %>?_method=DELETE"
                                         method="POST">
                                         <button class="btn btn-sm btn-danger">Delete</button>
                                     </form>
@@ -139,7 +134,5 @@
     </div>
 
     <script>
-        const mapToken = 'pk.eyJ1IjoibmVtaWxzaGFoIiwiYSI6ImNsd2Vva212MDE4djMyaWxkamx1emE2MG4ifQ.8i9uhpSxwWZo--UPI90rSA'
-        const furniture = <%-JSON.stringify(furniture)%>
+        const book = <% -JSON.stringify(book) %>
     </script>
-    <script src="/javascripts/showPageMap.js"></script>

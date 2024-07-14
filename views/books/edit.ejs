@@ -1,32 +1,24 @@
 <% layout('/layouts/boilerplate') %>
     <div class="row">
-        <h1 class="text-center">Edit Furniture</h1>
+        <h1 class="text-center">Edit Books</h1>
         <div class="col-md-6 offset-md-3">
-            <form action="/furnitures/<%= furniture._id%>?_method=PUT" method="POST" novalidate class="validated-form"
+            <form action="/books/<%= book._id%>?_method=PUT" method="POST" novalidate class="validated-form"
                 enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
-                    <input class="form-control" type="text" id="title" name="furniture[title]"
-                        value="<%= furniture.title %>" required>
+                    <input class="form-control" type="text" id="title" name="book[title]"
+                        value="<%= book.title %>" required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
 
                 </div>
                 <div class="mb-3">
-                    <label for="location" class="form-label">Location</label>
-                    <input class="form-control" type="text" id="location" name="furniture[location]"
-                        value="<%= furniture.location %>" required>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="price" class="form-label">Furniture Price</label>
+                    <label for="price" class="form-label">Book Price</label>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="price-label">$</span>
                         <input type="text" class="form-control" placeholder="0.00" aria-label="price"
-                            name="furniture[price]" aria-describedby="price-label" value="<%= furniture.price %>"
+                            name="book[price]" aria-describedby="price-label" value="<%= book.price %>"
                             required>
                         <div class="valid-feedback">
                             Looks good!
@@ -35,8 +27,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea name="furniture[description]" id="description" class="form-control"
-                        required>  <%= furniture.description %></textarea>
+                    <textarea name="book[description]" id="description" class="form-control"
+                        required>  <%= book.description %></textarea>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
@@ -47,7 +39,7 @@
                     <label for="image" class="custom-file-label text-muted"></label>
                 </div>
                 <div class="mb-3">
-                    <% furniture.images.forEach((img,i)=> { %>
+                    <% book.images.forEach((img,i)=> { %>
                         <img src="<%= img.thumbnail %>" alt="" class="img-thumbnail">
                         <div class="form-check-inline">
                             <input type="checkbox" name="deleteImages[]" id="image-<%= i %>"
@@ -57,9 +49,9 @@
                         <% }); %>
                 </div>
                 <div class="mb-3">
-                    <button class="btn btn-info">Update Furniture</button>
+                    <button class="btn btn-info">Update Book</button>
                 </div>
             </form>
-            <a href="/furnitures/<%= furniture._id%>">Back to Furniture</a>
+            <a href="/books/<%= book._id%>">Back to Book</a>
         </div>
     </div>
