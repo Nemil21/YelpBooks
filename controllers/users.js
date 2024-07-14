@@ -65,7 +65,6 @@ module.exports.addToChecklist = async (req, res, next) => {
             numberOfDays: parseInt(quantity)
         };
 
-
         user.checkList.push(checklistItem);
         await user.save();
 
