@@ -1,7 +1,7 @@
 const User = require('../models/user')
 const Book = require('../models/book')
 const nodemailer = require('nodemailer');
-
+const stripe = require('stripe')('sk_test_51PWyMyRw3hGwcyrC0h8xiEZX9Sp6Yz54ANZJUUUr1hnw0OCnne8nheovUDzwi6EwDBNfuOBCmOtD43vCg9VmIado00IeHhPEcA');
 
 module.exports.renderRegister = (req, res) => {
     res.render('users/register');
