@@ -17,7 +17,7 @@ router.route('/login')
 router.get('/logout', users.logout);
 
 
-router.route('/furnitures/:furnitureId/checklist')
+router.route('/books/:bookid/checklist')
     .post(catchAsync(users.addToChecklist));
 
 router.route('/checklist')

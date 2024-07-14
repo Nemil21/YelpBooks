@@ -22,9 +22,9 @@ const UserSchema = new Schema({
         required: true
     },
     checkList: [{
-        furniturechecked: {
+        bookchecked: {
             type: Schema.Types.ObjectId,
-            ref: 'Furniture'
+            ref: 'Book'
         },
         startDate: {
             type: Date,

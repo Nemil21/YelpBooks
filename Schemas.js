@@ -1,6 +1,6 @@
 const BaseJoi = require('joi');
 const sanitizeHtml = require('sanitize-html');
-const furniture = require('./models/furniture');
+const book = require('./models/book');
 
 const extension = (joi) => ({
     type: 'string',
@@ -21,13 +21,13 @@ const extension = (joi) => ({
         }
     }
 })
+
 const Joi = BaseJoi.extend(extension)
-module.exports.furnitureSchema = Joi.object({
-    furniture: Joi.object({
+
+module.exports.bookSchema = Joi.object({
+    book: Joi.object({
         title: Joi.string().required().escapeHTML(),
         price: Joi.number().required().min(0),
-        // image: Joi.string().required(),
-        location: Joi.string().required().escapeHTML(),
         description: Joi.string().required().escapeHTML()
     }).required(),
     deleteImages: Joi.array()

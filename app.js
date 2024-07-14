@@ -13,7 +13,7 @@ const User = require('./models/user')
 const helmet = require('helmet')
 
 const userRoutes = require('./routes/users')
-const furnitureRoutes = require('./routes/furnitures')
+const bookRoutes = require('./routes/books')
 const reviewRoutes = require('./routes/reviews')
 
 const ExpressError = require('./utils/ExpressError')
@@ -107,6 +107,7 @@ app.use(
                 "data:",
                 "https://res.cloudinary.com/dqeaomlck/",
                 "https://images.unsplash.com/",
+                "https://books.google.com/",
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
         },
@@ -127,8 +128,8 @@ app.use((req, res, next) => {
 })
 
 app.use('/', userRoutes)
-app.use('/furnitures', furnitureRoutes)
-app.use('/furnitures/:id/reviews', reviewRoutes)
+app.use('/books', bookRoutes)
+app.use('/books/:id/reviews', reviewRoutes)
 
 app.get('/', (req, res) => {
     res.render('home')
