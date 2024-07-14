@@ -24,7 +24,6 @@
             <div class="col-md-8 p-4">
                 <span class="d-flex justify-content-between mb-2">
                     <h5 class="card-title mt-2"><%= book.title %></h5>
-                    <a href="/books?search=<%= book.printType %>" class="text-light bg-dark btn"><%= book.printType %></a>
                 </span>
                 <p class="card-text"><%= book.description %></p>
                 <a href="/books/<%= book._id %>" class="btn btn-primary">View <%= book.title %></a>
