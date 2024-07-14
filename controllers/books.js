@@ -17,11 +17,10 @@ module.exports.index = async (req, res) => {
         query = {
             $or: [
                 { title: regex },
-                { description: regex },
-                { location: regex },
+                { author : regex },
                 { itemTypes: regex }
             ]
-        };
+        };  
     }
 
     const totalItems = await Book.countDocuments(query);
